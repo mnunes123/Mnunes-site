@@ -1,8 +1,8 @@
 # Publica o site estático na Hostinger por FTP sempre que há push para main.
 #
 # Configurar em Settings → Secrets and variables → Actions:
-#   Secrets:   HOSTINGER_FTP_SERVER    (ex.: ftp.o-seu-dominio.pt ou o IP indicado no hPanel)
-#              HOSTINGER_FTP_USERNAME  (ex.: u123456789 ou u123456789.o-seu-dominio.pt)
+#   Secrets:   HOSTINGER_FTP_SERVER    (ex.: ftp.mnunesdecor.com ou o IP indicado no hPanel)
+#              HOSTINGER_FTP_USERNAME  (ex.: u123456789 ou u123456789.mnunesdecor.com)
 #              HOSTINGER_FTP_PASSWORD
 #   Variable (opcional): HOSTINGER_SERVER_DIR  (por omissão: public_html/)
 name: Deploy to Hostinger
