@@ -1,0 +1,37 @@
+# Publica o site estático na Hostinger por FTP sempre que há push para main.
+#
+# Configurar em Settings → Secrets and variables → Actions:
+#   Secrets:   HOSTINGER_FTP_SERVER    (ex.: ftp.o-seu-dominio.pt ou o IP indicado no hPanel)
+#              HOSTINGER_FTP_USERNAME  (ex.: u123456789 ou u123456789.o-seu-dominio.pt)
+#              HOSTINGER_FTP_PASSWORD
+#   Variable (opcional): HOSTINGER_SERVER_DIR  (por omissão: public_html/)
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Preparar ficheiros do site
+        run: |
+          mkdir site
+          cp index.html favicon.ico favicon-32x32.png favicon-192x192.png apple-touch-icon.png site/
+
+      - name: Enviar por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          local-dir: ./site/
+          server-dir: ${{ vars.HOSTINGER_SERVER_DIR || 'public_html/' }}
